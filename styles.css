@@ -1,0 +1,1020 @@
+/* ========================================
+   Ant Browser — antbrowser.app
+   Clean rebuild from Framer export
+   ======================================== */
+
+:root {
+    --purple: #6927DA;
+    --purple-dark: #5720B7;
+    --purple-deep: #491C96;
+    --purple-darkest: #2E125E;
+    --purple-light: #875CF7;
+    --pink: #DD2590;
+    --bg-lavender: #ECE9FE;
+    --bg-near-white: #FBFAFF;
+    --bg-white: #ffffff;
+    --text-dark: #2E125E;
+    --text-muted: rgba(46, 18, 94, 0.5);
+    --text-gray: #6E6E73;
+    --max-width: 1200px;
+    --section-padding: 120px 24px;
+}
+
+/* Reset */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--bg-white);
+    color: var(--text-dark);
+    line-height: 1.5;
+    overflow-x: hidden;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+ul {
+    list-style: none;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Shared background wrapper — prevents seams between adjacent lavender sections */
+.bg-lavender-block {
+    background: var(--bg-lavender);
+}
+
+/* ========================================
+   Scroll Animations
+   ======================================== */
+
+.fade-up {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+
+.fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Cascading entrance for hero devices */
+.cascade {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+
+.cascade.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Center watch animates first */
+.cascade-center {
+    transition-delay: 0s;
+}
+
+/* One step out from center */
+.cascade-mid {
+    transition-delay: 0.15s;
+}
+
+/* Outermost watches */
+.cascade-outer {
+    transition-delay: 0.3s;
+}
+
+/* Parallax arc offsets — center highest, edges lower */
+.devices-row .cascade-center.visible { transform: translateY(-24px); }
+.devices-row .cascade-mid.visible    { transform: translateY(-10px); }
+.devices-row .cascade-outer.visible  { transform: translateY(8px); }
+
+/* ========================================
+   Image Assets
+   ======================================== */
+
+/* Logo icons */
+img.nav-logo-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    flex-shrink: 0;
+}
+
+.hero-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 20px;
+}
+
+.cta-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 20px;
+}
+
+/* Watch screen images */
+.watch-screen img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: inherit;
+}
+
+/* Product Hunt badge */
+.ph-badge-img {
+    height: 40px;
+    width: auto;
+    display: block;
+}
+
+/* ========================================
+   Nav
+   ======================================== */
+
+.nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(247, 243, 254, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+.nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 16px 40px;
+}
+
+.nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.nav-logo-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.nav-logo-name {
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--purple);
+}
+
+.nav-logo-sub {
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+/* ========================================
+   Buttons
+   ======================================== */
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: inherit;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.btn:hover {
+    transform: scale(1.03);
+}
+
+.btn:active {
+    transform: scale(0.98);
+}
+
+.btn-primary {
+    background: var(--purple);
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: 100px;
+    font-size: 16px;
+    letter-spacing: -0.02em;
+}
+
+.btn-large {
+    padding: 14px 32px;
+    font-size: 18px;
+}
+
+/* ========================================
+   Hero
+   ======================================== */
+
+.hero {
+    text-align: center;
+    padding: 60px 24px 20px;
+}
+
+.hero .hero-icon {
+    margin: 0 auto 24px;
+    display: block;
+}
+
+.hero-title {
+    font-size: clamp(46px, 8vw, 80px);
+    font-weight: 600;
+    line-height: 1.1em;
+    letter-spacing: -0.06em;
+    background: linear-gradient(
+        -30deg,
+        #5720B7 0%,
+        #DD2590 25%,
+        #875CF7 50%,
+        #DD2590 75%,
+        #5720B7 100%
+    );
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: hero-shimmer 6s ease-in-out infinite;
+    position: relative;
+}
+
+/* Soft pulsing glow behind the heading */
+.hero-title::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1);
+    width: 90%;
+    height: 130%;
+    background: radial-gradient(
+        ellipse,
+        rgba(221, 37, 144, 0.3) 0%,
+        rgba(135, 92, 247, 0.2) 40%,
+        transparent 70%
+    );
+    filter: blur(30px);
+    z-index: -1;
+    animation: hero-glow 4s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes hero-shimmer {
+    0%, 100% { background-position: 0% center; }
+    50% { background-position: 100% center; }
+}
+
+@keyframes hero-glow {
+    0%, 100% {
+        opacity: 0.4;
+        transform: translate(-50%, -50%) scale(1);
+    }
+    50% {
+        opacity: 0.7;
+        transform: translate(-50%, -50%) scale(1.15);
+    }
+}
+
+/* ========================================
+   Devices Row
+   ======================================== */
+
+.devices {
+    padding: 30px 24px 40px;
+}
+
+.devices-row {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 16px;
+    max-width: var(--max-width);
+    margin: 0 auto;
+}
+
+/* Watch Mockup Component
+   Structure: .watch-mockup > .watch-shell + .watch-screen + .watch-frame
+*/
+.watch-mockup {
+    position: relative;
+    flex-shrink: 0;
+}
+
+.watch-screen {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 82%;
+    height: 84%;
+    border-radius: 24px;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.watch-shell {
+    width: 91%;
+    height: 93%;
+    position: absolute;
+    top: 50%;
+    left: 49.4%;
+    transform: translate(-50%, -50%);
+    border-radius: 40px;
+    background: #1a1a1a;
+    box-shadow:
+        rgba(23, 0, 64, 0.09) 0.92px 1.68px 2.68px -0.19px,
+        rgba(23, 0, 64, 0.094) 2.19px 3.98px 6.36px -0.38px,
+        rgba(23, 0, 64, 0.098) 3.99px 7.26px 11.6px -0.56px,
+        rgba(23, 0, 64, 0.106) 6.64px 12.07px 19.29px -0.75px,
+        rgba(23, 0, 64, 0.114) 10.72px 19.5px 31.15px -0.94px,
+        rgba(23, 0, 64, 0.13) 17.55px 31.91px 50.99px -1.13px,
+        rgba(23, 0, 64, 0.157) 30.22px 54.95px 87.8px -1.31px,
+        rgba(23, 0, 64, 0.21) 55px 100px 159.78px -1.5px;
+    z-index: 0;
+}
+
+.watch-frame {
+    width: 106%;
+    height: 101%;
+    position: absolute;
+    top: 49.4%;
+    left: 51.7%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    pointer-events: none;
+}
+
+.watch-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* Watch Sizes */
+.watch-small  { width: 200px; height: 240px; }
+.watch-large  { width: 280px; height: 336px; }
+.watch-faq    { width: 240px; height: 290px; }
+.watch-companion { width: 200px; height: 240px; }
+.watch-cta    { width: 320px; height: 390px; }
+
+/* ========================================
+   Tagline
+   ======================================== */
+
+.tagline {
+    text-align: center;
+    padding: 40px 24px 80px;
+}
+
+.tagline-text {
+    font-size: clamp(24px, 4vw, 32px);
+    font-weight: 600;
+    color: var(--purple-deep);
+    letter-spacing: -0.03em;
+    line-height: 1.2em;
+    margin-bottom: 24px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* ========================================
+   Feature Sections
+   ======================================== */
+
+.feature {
+    padding: var(--section-padding);
+}
+
+.feature-inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+}
+
+.feature-heading {
+    font-size: clamp(32px, 5vw, 56px);
+    font-weight: 600;
+    line-height: 1.2em;
+    letter-spacing: -0.04em;
+    margin-bottom: 60px;
+    background: linear-gradient(0deg, rgb(87, 32, 183) 0%, rgb(135, 91, 247) 123%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Search Feature + Posters — 2×2 grid */
+.feature-search {
+    background: var(--bg-near-white);
+}
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 40px 60px;
+    align-items: center;
+    justify-content: center;
+}
+
+.watch-feature { width: 280px; height: 340px; }
+
+.feature-list-title {
+    font-size: clamp(24px, 3vw, 32px);
+    font-weight: 600;
+    color: var(--purple);
+    letter-spacing: -0.03em;
+    margin-bottom: 12px;
+}
+
+.feature-list ul {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.feature-list li {
+    font-size: clamp(18px, 2vw, 24px);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    background: linear-gradient(0deg, rgba(46, 18, 94, 0.4) -11%, rgb(46, 18, 94) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Silver watch frame variant for poster watches */
+.watch-frame-silver {
+    filter: brightness(1.15) saturate(0.8);
+}
+
+/* Companion */
+
+.feature-companion .feature-heading {
+    text-align: left;
+    max-width: 500px;
+}
+
+.feature-companion .feature-inner {
+    display: flex;
+    align-items: center;
+    gap: 60px;
+}
+
+.companion-devices {
+    position: relative;
+    flex-shrink: 0;
+}
+
+.iphone-mockup {
+    position: relative;
+    width: 280px;
+    height: 560px;
+}
+
+.iphone-screen {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    height: 96%;
+    border-radius: 36px;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.iphone-screen img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: inherit;
+}
+
+.iphone-frame {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.iphone-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.companion-devices .watch-companion {
+    position: absolute;
+    bottom: -20px;
+    right: -80px;
+    z-index: 3;
+}
+
+/* ========================================
+   FAQ Section
+   ======================================== */
+
+.faq-section {
+    padding: var(--section-padding);
+}
+
+.faq-inner {
+    display: flex;
+    align-items: flex-start;
+    gap: 60px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.faq-inner .watch-mockup {
+    position: sticky;
+    top: 120px;
+    flex-shrink: 0;
+}
+
+.faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+}
+
+.faq-item {
+    padding-bottom: 48px;
+    border-bottom: 1px solid rgba(105, 39, 218, 0.12);
+}
+
+.faq-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.faq-question {
+    font-size: clamp(21px, 2.5vw, 28px);
+    font-weight: 600;
+    color: var(--purple-darkest);
+    letter-spacing: -0.03em;
+    line-height: 1.2em;
+    margin-bottom: 12px;
+}
+
+.faq-answer {
+    font-size: clamp(18px, 2.5vw, 24px);
+    font-weight: 500;
+    color: var(--purple);
+    letter-spacing: -0.02em;
+    line-height: 1.4em;
+    margin-bottom: 8px;
+}
+
+.faq-answer:last-child {
+    margin-bottom: 0;
+}
+
+/* ========================================
+   CTA
+   ======================================== */
+
+.cta {
+    background: var(--bg-near-white);
+    padding: 80px 24px;
+}
+
+.cta-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 60px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.cta-content {
+    flex: 1;
+}
+
+.cta-heading {
+    font-size: clamp(32px, 5vw, 56px);
+    font-weight: 600;
+    line-height: 1.2em;
+    letter-spacing: -0.04em;
+    margin: 24px 0 32px;
+    background: linear-gradient(37deg, rgb(87, 32, 183) 19%, rgb(221, 37, 144) 90%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.cta-heading em {
+    font-style: italic;
+}
+
+/* ========================================
+   Footer
+   ======================================== */
+
+.footer {
+    background: var(--bg-white);
+    border-top: 1px solid #e8e0f5;
+}
+
+.footer-inner {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 80px 40px;
+}
+
+.footer-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.footer-name {
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--purple);
+    margin-top: 8px;
+}
+
+.footer-tagline {
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+.footer-links {
+    display: flex;
+    gap: 80px;
+}
+
+.footer-col {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.footer-col-title {
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--text-dark);
+    margin-bottom: 4px;
+}
+
+.footer-col a {
+    font-size: 14px;
+    color: var(--purple);
+    font-weight: 600;
+    transition: opacity 0.2s;
+}
+
+.footer-col a:hover {
+    opacity: 0.7;
+}
+
+.footer-copy {
+    color: var(--text-muted);
+    font-size: 13px;
+}
+
+/* ========================================
+   Responsive — Tablet (≤1024px)
+   ======================================== */
+
+@media (max-width: 1024px) {
+    .devices-row {
+        gap: 10px;
+    }
+
+    .watch-small {
+        width: 160px;
+        height: 192px;
+    }
+
+    .watch-large {
+        width: 230px;
+        height: 276px;
+    }
+
+    .watch-screen {
+        border-radius: 20px;
+    }
+}
+
+/* ========================================
+   Responsive — Mobile (≤810px)
+   ======================================== */
+
+@media (max-width: 810px) {
+    :root {
+        --section-padding: 60px 24px;
+    }
+
+    .nav-inner {
+        padding: 12px 20px;
+    }
+
+    .btn-primary {
+        padding: 10px 20px;
+        font-size: 15px;
+    }
+
+    .btn-large {
+        padding: 12px 28px;
+        font-size: 16px;
+    }
+
+    .ph-badge {
+        display: none;
+    }
+
+    .hero {
+        padding: 40px 24px 16px;
+    }
+
+    .hero-icon {
+        width: 64px;
+        height: 64px;
+        border-radius: 16px;
+    }
+
+    /* --- Devices Row: hide outer watches, let center 3 clip at viewport edges --- */
+    .devices {
+        padding: 24px 0 32px;
+    }
+
+    .cascade-outer {
+        display: none;
+    }
+
+    .devices-row {
+        gap: 10px;
+        justify-content: center;
+        overflow: visible;
+        padding: 0;
+    }
+
+    .watch-small {
+        width: 170px;
+        height: 204px;
+    }
+
+    .watch-large {
+        width: 220px;
+        height: 264px;
+    }
+
+    /* Reduce parallax arc on mobile */
+    .devices-row .cascade-center.visible { transform: translateY(-16px); }
+    .devices-row .cascade-mid.visible    { transform: translateY(-4px); }
+
+    .watch-screen {
+        border-radius: 18px;
+    }
+
+    .tagline {
+        padding: 32px 24px 60px;
+    }
+
+    .feature-heading {
+        margin-bottom: 40px;
+    }
+
+    .feature-search .feature-heading {
+        text-align: center;
+    }
+
+    .feature-list {
+        text-align: center;
+    }
+
+    .feature-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+        justify-items: center;
+    }
+
+    .watch-feature {
+        width: 220px;
+        height: 268px;
+    }
+
+    .feature-companion .feature-inner {
+        flex-direction: column;
+        align-items: center;
+        gap: 40px;
+    }
+
+    .feature-companion .feature-heading {
+        text-align: center;
+        max-width: 100%;
+    }
+
+    .companion-devices {
+        display: flex;
+        justify-content: center;
+    }
+
+    .faq-inner {
+        flex-direction: column;
+        align-items: center;
+        gap: 32px;
+    }
+
+    .faq-inner .watch-mockup {
+        position: relative;
+        top: auto;
+    }
+
+    .faq-list {
+        text-align: left;
+        gap: 32px;
+    }
+
+    .faq-item {
+        padding-bottom: 32px;
+    }
+
+    .cta {
+        padding: 60px 24px;
+    }
+
+    .cta-inner {
+        flex-direction: column;
+        text-align: center;
+        gap: 40px;
+    }
+
+    .cta-device {
+        order: -1;
+    }
+
+    .watch-cta {
+        width: 240px;
+        height: 292px;
+    }
+
+    .footer-inner {
+        flex-direction: column;
+        gap: 40px;
+        padding: 40px 24px;
+    }
+
+    .footer-links {
+        gap: 40px;
+    }
+}
+
+/* ========================================
+   Responsive — Small Mobile (≤480px)
+   ======================================== */
+
+@media (max-width: 480px) {
+    .hero {
+        padding: 32px 20px 12px;
+    }
+
+    .hero-title {
+        font-size: 44px;
+    }
+
+    .hero-icon {
+        width: 56px;
+        height: 56px;
+        border-radius: 14px;
+    }
+
+    /* Watches sized so center 3 extend past 375px viewport and clip naturally */
+    .watch-small {
+        width: 155px;
+        height: 186px;
+    }
+
+    .watch-large {
+        width: 200px;
+        height: 240px;
+    }
+
+    .devices-row {
+        gap: 8px;
+    }
+
+    .watch-screen {
+        border-radius: 16px;
+    }
+
+    .tagline {
+        padding: 24px 20px 48px;
+    }
+
+    .tagline-text {
+        font-size: 22px;
+    }
+
+    .feature {
+        padding: 48px 20px;
+    }
+
+    .feature-heading {
+        font-size: 28px;
+        margin-bottom: 32px;
+    }
+
+    .watch-feature {
+        width: 180px;
+        height: 220px;
+    }
+
+    .iphone-mockup {
+        width: 220px;
+        height: 440px;
+    }
+
+    .iphone-screen {
+        border-radius: 28px;
+    }
+
+    .companion-devices .watch-companion {
+        right: -40px;
+        bottom: -10px;
+    }
+
+    .watch-companion {
+        width: 150px;
+        height: 180px;
+    }
+
+    .watch-faq {
+        width: 200px;
+        height: 242px;
+    }
+
+    .faq-question {
+        font-size: 20px;
+    }
+
+    .faq-answer {
+        font-size: 17px;
+    }
+
+    .faq-section {
+        padding: 48px 20px;
+    }
+
+    .cta {
+        padding: 48px 20px;
+    }
+
+    .watch-cta {
+        width: 200px;
+        height: 244px;
+    }
+
+    .cta-icon {
+        width: 64px;
+        height: 64px;
+        border-radius: 16px;
+    }
+
+    .footer-inner {
+        padding: 32px 20px;
+    }
+
+    .footer-links {
+        flex-direction: column;
+        gap: 24px;
+    }
+}
