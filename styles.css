@@ -564,6 +564,14 @@ img.nav-logo-icon {
     flex-shrink: 0;
 }
 
+.faq-inner .watch-screen img {
+    transition: opacity 0.4s ease;
+}
+
+.faq-inner .watch-screen img.fading {
+    opacity: 0;
+}
+
 .faq-list {
     display: flex;
     flex-direction: column;
