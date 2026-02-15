@@ -774,6 +774,7 @@ img.nav-logo-icon {
     /* --- Devices Row: hide outer watches, let center 3 clip at viewport edges --- */
     .devices {
         padding: 24px 0 32px;
+        overflow: hidden;
     }
 
     .cascade-outer {
